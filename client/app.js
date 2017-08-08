@@ -28,7 +28,11 @@ Vue.use(VueAuth, {
   },
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-  loginData: { url: api.auth.index, fetchUser: false },
+  loginData: { url: api.auth.index, fetchUser: true },
+  fetchData: {url: api.user.fetch, method: 'GET', enabled: true},
+  parseUserData: function (data) {
+    return data;
+  },
   logoutData: { url: api.auth.index, method: 'POST', redirect: '/', makeRequest: false},
   refreshData: {url: api.auth.index, method: 'POST', enabled: false, interval: 30}
 })

@@ -125,7 +125,7 @@ export default {
     addArticle (){
       let _this = this;
       this.axios({
-        url: api.articles.create,
+        url: api.article.create,
         method: "post",
         data : {
           title: this.article.title,
@@ -147,7 +147,7 @@ export default {
       let _this = this;
       let id = this.$route.params.id;
       this.axios({
-        url: api.articles.update + id,
+        url: api.article.update + id,
         method: "put",
         data : {
           title: this.article.title,
@@ -172,7 +172,7 @@ export default {
         return false;
       }
       this.axios({
-        url: api.articles.view + id,
+        url: api.article.view + id,
         method: "get",
       }).then((response) => {
         if(response.status == 200){

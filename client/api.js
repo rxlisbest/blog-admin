@@ -3,25 +3,28 @@ let localhostDev = true;
 //生产环境，就把localhostDev 设置成false，连接就是拼成‘http://xxx.com/api/test’
 let _host = localhostDev ? 'http://127.0.0.1:8000' : 'http://xxx.com';
 let httpUrl = {
-	articles: {
-	    'index': _host + '/api/v1/articles',
-	    'view': _host + '/api/v1/articles/',
-	    'create': _host + '/api/v1/articles',
-	    'update': _host + '/api/v1/articles/',
-	    'delete': _host + '/api/v1/articles/'
+	article: {
+		'index': _host + '/v1/article',
+		'view': _host + '/v1/article/',
+		'create': _host + '/v1/article',
+		'update': _host + '/v1/article/',
+		'delete': _host + '/v1/article/'
 	},
 	qiniu: {
-	    'token': _host + '/api/v1/qiniu/token',
+		'token': _host + '/v1/qiniu/token',
 	},
 	file: {
-	    'view': _host + '/api/v1/files/',
-	    'create': _host + '/api/v1/files',
+		'view': _host + '/v1/file/',
+		'create': _host + '/v1/file',
 	},
 	statistic: {
-	    'index': _host + '/api/v1/statistics',
+		'index': _host + '/v1/statistic',
 	},
 	auth: {
-	    'index': _host + '/api/v1/auth',
+		'index': _host + '/v1/auth',
+	},
+	user: {
+		'fetch': _host + '/v1/user/fetch',
 	},
 };
 export const api = httpUrl

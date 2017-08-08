@@ -92,10 +92,11 @@ export default {
       let _this = this;
       _this.showPagination = false;
       _this.axios({
-        url: api.articles.index,
+        url: api.article.index,
         method: "get",
         params: {
           page: _this.articles.pages.page,
+          user_id: _this.$auth.user().user_id,
         }
       }).then((response) => {
         _this.articles = response.data;
@@ -107,7 +108,7 @@ export default {
     deleteArticle (obj) {
       let _this = this;
       this.axios({
-        url: api.articles.delete + obj.id,
+        url: api.article.delete + obj.id,
         method: "delete",
       }).then((response) => {
         _this.articles.pages.page = 0;

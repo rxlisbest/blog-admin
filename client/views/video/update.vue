@@ -75,6 +75,7 @@ export default {
       article: {
         title: '',
         content: '',
+        cover_src: '',
         file_id: 0,
         type: 1,
       },
@@ -154,6 +155,7 @@ export default {
           content: this.article.content,
           file_id: this.article.file_id,
           type: this.article.type,
+          cover_src: this.article.cover_src,
         }
       }).then((response) => {
         if(response.status == 200){
@@ -263,6 +265,7 @@ export default {
                   }).then((response) => {
                     if(response.status == 200){
                       _this.article.file_id = response.data.id;
+                      _this.article.cover_src = "";
                       _this.file.name = file.name;
                       _this.file.id = response.data.id;
                     }

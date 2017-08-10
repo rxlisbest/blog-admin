@@ -1,6 +1,6 @@
 <template>
   <image-modal :visible="visible" @close="close" transition="roll">
-    <video-player ref="videoPlayer" :options="playerOptions"></video-player>
+    <video-player v-if="visible" ref="videoPlayer" :options="playerOptions"></video-player>
   </image-modal>
 </template>
 
@@ -25,11 +25,11 @@ export default {
       playerOptions: {
         // component options
         start: 0,
-        playsinline: false,
+        playsinline: true,
         // videojs options
-        muted: true,
+        // muted: true,
         language: 'en',
-        playbackRates: [1.0, 2.0],
+        // playbackRates: [1.0, 2.0],
         sources: [{
           type: this.type,
           src: this.src
@@ -46,3 +46,8 @@ export default {
   }
 }
 </script>
+<style type="text/css">
+  .modal-content, .modal-card {
+    max-height: 360px;
+  }
+</style>

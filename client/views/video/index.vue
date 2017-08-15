@@ -97,6 +97,7 @@ export default {
         params: {
           page: _this.articles.pages.page,
           user_id: _this.$auth.user().user_id,
+          type: 1,
         }
       }).then((response) => {
         _this.articles = response.data;

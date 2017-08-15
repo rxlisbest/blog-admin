@@ -1,5 +1,5 @@
 <template>
-  <card-modal :visible="visible" @close="close" :title="title" transition="zoom" @ok="ok()" @cancel="cancel()">
+  <card-modal :okText="okText" :cancelText="cancelText" :visible="visible" @close="close" :title="title" transition="zoom" @ok="ok()" @cancel="cancel()">
     <div class="content has-text-centered"><i class="fa fa-exclamation-triangle fa-5x pull-left" :class="type" aria-hidden="true"></i><span class="message1" v-text="message"></span></div>
   </card-modal>
 </template>
@@ -18,6 +18,14 @@ export default {
     message: String,
     type: String,
     url: String,
+    okText: {
+      type: String,
+      default: '确定'
+    },
+    cancelText: {
+      type: String,
+      default: '取消'
+    }
   },
 
   data () {
@@ -28,7 +36,7 @@ export default {
 
   methods: {
     ok(){
-      this.$emit('ok')
+      this.$emit('test')
     },
     open (url) {
       window.open(url)

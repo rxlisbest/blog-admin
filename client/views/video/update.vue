@@ -372,6 +372,7 @@ export default {
         title: '分类管理',
         okText: '新增',
         cancelText: '取消',
+        type: 1,
       };
       let ins = new CategoryModalComponent({
         el: document.createElement('div'),

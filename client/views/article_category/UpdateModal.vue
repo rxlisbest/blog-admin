@@ -34,6 +34,7 @@ export default {
     title: String,
     okText: String,
     cancelText: String,
+    type: Number
   },
 
   data () {
@@ -56,6 +57,9 @@ export default {
       this.axios({
         url: api.article_category.index,
         method: "get",
+        params: {
+          type: this.type,
+        }
       }).then((response) => {
         if(response.status == 200){
           var data = response.data;
@@ -75,7 +79,8 @@ export default {
       this.$emit('close')
     },
     cancel(){
-      this.$emit('cancel')
+      this.cancelAdd();
+      // this.$emit('cancel')
     },
 
     add(){
@@ -93,7 +98,7 @@ export default {
         data : {
           title: this.article_category.title,
           parent_id: 0,
-          type: 1,
+          type: this.type,
           status: 0
         }
       }).then((response) => {

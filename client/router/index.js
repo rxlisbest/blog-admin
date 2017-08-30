@@ -16,16 +16,25 @@ export default new Router({
     {
       name: 'Article',
       path: '/video/page/:id',
+      meta: {
+        auth: true
+      },
       component: require('../views/video')
     },
     {
       name: 'updateArticle',
       path: '/video/update/:id',
+      meta: {
+        auth: true
+      },
       component: require('../views/video/update')
     },
     {
       name: 'createArticle',
       path: '/video/create',
+      meta: {
+        auth: true
+      },
       component: require('../views/video/update')
     },
     {

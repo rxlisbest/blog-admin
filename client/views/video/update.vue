@@ -7,7 +7,17 @@
           <div class="block">
             <label class="label">标题</label>
             <p class="control is-4">
-              <input class="input" type="text" placeholder="Text input" v-model="article.title">
+              <input class="input input-50" type="text" placeholder="Text input" v-model="article.title">
+            </p>
+            <label class="label">分类</label>
+            <p class="control is-4">
+              <span class="select">
+                <select v-model="article.category_id">
+                  <option value="">请选择</option>
+                  <option v-for="v in article_category" :value="v.id">{{v.title}}</option>
+                </select>
+              </span>
+              <a class="category" @click="openCategoryModal()">分类管理</a>
             </p>
             <p class="control is-4" id="container">
             <label class="label">上传</label>
@@ -45,6 +55,8 @@ import qiniu from 'qiniu-js'
 import Vue from 'vue'
 import VideoModal from '../components/modals/VideoModal'
 const VideoModalComponent = Vue.extend(VideoModal)
+import CategoryModal from '../article_category/UpdateModal'
+const CategoryModalComponent = Vue.extend(CategoryModal)
 import Message from 'vue-bulma-message'
 const MessageComponent = Vue.extend(Message)
 const openMessage = (propsData = {
@@ -72,9 +84,12 @@ export default {
     return {
       data: [300, 50, 100],
       percent: 0,
+      article_category: [],
       article: {
         title: '',
         content: '',
+        cover_src: '',
+        category_id: '',
         file_id: 0,
         type: 1,
       },
@@ -96,6 +111,7 @@ export default {
   },
   mounted () {
     this.loadData();
+    this.loadArticleCategory();
     this.loadQiniu();
   },
 
@@ -103,10 +119,14 @@ export default {
     submit(){
       let title = this.article.title;
       let content = this.article.content;
+      let category_id = this.article.category_id;
       let file_id = this.article.file_id;
-      let type = this.article.type;
       if(!title){
         openMessage({message: '标题不能为空', type: 'danger', duration: 1500, showCloseButton: true})
+        return false;
+      }
+      if(!category_id){
+        openMessage({message: '分类不能为空', type: 'danger', duration: 1500, showCloseButton: true})
         return false;
       }
       if(!file_id){
@@ -125,13 +145,13 @@ export default {
     addArticle (){
       let _this = this;
       this.axios({
-        url: api.article.create,
+        url: api.articles.create,
         method: "post",
         data : {
           title: this.article.title,
           content: this.article.content,
           file_id: this.article.file_id,
-          type: this.article.type,
+          category_id: this.article.category_id,
         }
       }).then((response) => {
         // console.log(response);
@@ -147,13 +167,14 @@ export default {
       let _this = this;
       let id = this.$route.params.id;
       this.axios({
-        url: api.article.update + id,
+        url: api.articles.update + id,
         method: "put",
         data : {
           title: this.article.title,
           content: this.article.content,
           file_id: this.article.file_id,
-          type: this.article.type,
+          category_id: this.article.category_id,
+          cover_src: this.article.cover_src,
         }
       }).then((response) => {
         if(response.status == 200){
@@ -165,6 +186,21 @@ export default {
       })
     },
 
+    loadArticleCategory(){
+      let _this = this;
+      this.axios({
+        url: api.article_categories.index,
+        method: "get",
+      }).then((response) => {
+        if(response.status == 200){
+          var data = response.data;
+          _this.article_category = data;
+        }
+      }).catch((error) => {
+
+      });
+    },
+
     loadData () {
       let _this = this;
       let id = Number(this.$route.params.id);
@@ -172,7 +208,7 @@ export default {
         return false;
       }
       this.axios({
-        url: api.article.view + id,
+        url: api.articles.view + id,
         method: "get",
       }).then((response) => {
         if(response.status == 200){
@@ -180,7 +216,7 @@ export default {
           _this.article = data;
           if(data.file_id > 0){
             _this.axios({
-              url: api.file.view + data.file_id,
+              url: api.files.view + data.file_id,
               method: "get",
             }).then((response) => {
               if(response.status == 200){
@@ -196,7 +232,6 @@ export default {
 
       })
     },
-
     loadQiniu (){
       let _this = this;
       new Promise(function(resolve, reject) {
@@ -249,7 +284,7 @@ export default {
                 'FileUploaded': function(up, file, info) {
                   eval("info = " + info.response);
                   _this.axios({
-                    url: api.file.create,
+                    url: api.files.create,
                     method: "post",
                     data : {
                       hash: info.hash,
@@ -263,6 +298,7 @@ export default {
                   }).then((response) => {
                     if(response.status == 200){
                       _this.article.file_id = response.data.id;
+                      _this.article.cover_src = "";
                       _this.file.name = file.name;
                       _this.file.id = response.data.id;
                     }
@@ -293,7 +329,7 @@ export default {
         return false;
       }
       _this.axios({
-        url: api.file.view + _this.file.id,
+        url: api.files.view + _this.file.id,
         method: "get",
       }).then((response) => {
         if(response.status == 200){
@@ -329,16 +365,40 @@ export default {
       }).catch((error) => {
 
       })
+    },
+    openCategoryModal(){
+      let propsData = {
+        visible: true,
+        title: '分类管理',
+        okText: '新增',
+        cancelText: '取消',
+        type: 1,
+      };
+      let ins = new CategoryModalComponent({
+        el: document.createElement('div'),
+        propsData
+      });
+      ins.loadArticleCategory = this.loadArticleCategory;
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+  .input-30{
+    width: 30%;
+  }
+  .input-50{
+    width: 50%;
+  }
   .top {
     margin-top: 10px;
   }
   .btn-left-10{
     margin-left: 10px;
+  }
+  .category{
+    margin-left: 10px;
+    line-height: 30px;
   }
 </style>

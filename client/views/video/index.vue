@@ -34,7 +34,7 @@
               </tr>
             </tbody>
           </table>
-          <pagination v-if="showPagination" :pageNo="articles.pages.totalPage" :cur="articles.pages.page + 1" @requestData="requestData"></pagination>
+          <pagination v-if="showPagination" :pageNo="articles.pages.totalPage" :cur="articles.pages.page" @requestData="requestData"></pagination>
           <!-- <a v-for="v in Array.from(new Array(articles.pages.totalPage), (v,i) => { return i})" :key="v" @click="page(v)">{{v + 1}}</a> -->
         </article>
       </div>
@@ -62,7 +62,7 @@ export default {
         models: [],
         pages:{
           totalPage: 1,
-          page: 0
+          page: 1
         }
       },
       showPagination: false,
@@ -84,7 +84,7 @@ export default {
   
   methods: {
     requestData (page) {
-      this.articles.pages.page = page - 1;
+      this.articles.pages.page = page;
       this.loadData();
       // 在这里使用ajax或者fetch将对应页传过去获取数据即可
     },
@@ -92,14 +92,18 @@ export default {
       let _this = this;
       _this.showPagination = false;
       _this.axios({
-        url: api.article.index,
+        url: api.articles.index,
         method: "get",
         params: {
           page: _this.articles.pages.page,
           user_id: _this.$auth.user().user_id,
+          type: 1,
         }
       }).then((response) => {
-        _this.articles = response.data;
+        let headers = response.headers;
+        _this.articles.models = response.data;
+        _this.articles.pages.totalPage = Number(headers['x-pagination-page-count']);
+        _this.articles.pages.page = Number(headers['x-pagination-current-page']);
         _this.showPagination = true;
       }).catch((error) => {
         // console.log(error)
@@ -108,10 +112,10 @@ export default {
     deleteArticle (obj) {
       let _this = this;
       this.axios({
-        url: api.article.delete + obj.id,
+        url: api.articles.delete + obj.id,
         method: "delete",
       }).then((response) => {
-        _this.articles.pages.page = 0;
+        _this.articles.pages.page = 1;
         _this.loadData();
       }).catch((error) => {
         // console.log(error)

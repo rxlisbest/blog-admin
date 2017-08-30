@@ -110,6 +110,7 @@ export default {
       })
     },
     deleteArticle (obj) {
+      console.log(obj)
       let _this = this;
       this.axios({
         url: api.articles.delete + obj.id,

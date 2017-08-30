@@ -36,7 +36,7 @@ export default {
 
   methods: {
     ok(){
-      this.$emit('test')
+      this.$emit('ok')
     },
     open (url) {
       window.open(url)

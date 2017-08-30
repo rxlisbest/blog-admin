@@ -102,7 +102,7 @@ export default {
       }
       _this.chartistShow = false;
       _this.axios({
-        url: api.statistic.index,
+        url: api.statistics.index,
         method: "get",
         params: {
           type: type,

@@ -55,7 +55,7 @@ export default {
     loadData(){
       let _this = this;
       this.axios({
-        url: api.article_category.index,
+        url: api.article_categories.index,
         method: "get",
         params: {
           type: this.type,
@@ -93,7 +93,7 @@ export default {
     submitAdd(){
       let _this = this;
       this.axios({
-        url: api.article_category.create,
+        url: api.article_categories.create,
         method: "post",
         data : {
           title: this.article_category.title,
@@ -120,7 +120,7 @@ export default {
     submitEdit(k, v){
       let _this = this;
       this.axios({
-        url: api.article_category.update + v.id,
+        url: api.article_categories.update + v.id,
         method: "put",
         data : {
           title: v.title,
@@ -137,7 +137,7 @@ export default {
     del(k, v){
       let _this = this;
       this.axios({
-        url: api.article_category.delete + v.id,
+        url: api.article_categories.delete + v.id,
         method: "delete"
       }).then((response) => {
         _this.$delete(_this.article_categories, k);

@@ -92,7 +92,7 @@ export default {
       let _this = this;
       _this.showPagination = false;
       _this.axios({
-        url: api.article.index,
+        url: api.articles.index,
         method: "get",
         params: {
           page: _this.articles.pages.page,
@@ -112,7 +112,7 @@ export default {
     deleteArticle (obj) {
       let _this = this;
       this.axios({
-        url: api.article.delete + obj.id,
+        url: api.articles.delete + obj.id,
         method: "delete",
       }).then((response) => {
         _this.articles.pages.page = 1;

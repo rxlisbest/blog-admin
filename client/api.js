@@ -3,35 +3,35 @@ let localhostDev = true;
 //生产环境，就把localhostDev 设置成false，连接就是拼成‘http://xxx.com/api/test’
 let _host = localhostDev ? 'http://127.0.0.1:8000' : 'https://api.blog.ruixinglong.net';
 let httpUrl = {
-	article: {
-		'index': _host + '/v1/article',
-		'view': _host + '/v1/article/',
-		'create': _host + '/v1/article',
-		'update': _host + '/v1/article/',
-		'delete': _host + '/v1/article/'
+	articles: {
+		'index': _host + '/v1/articles',
+		'view': _host + '/v1/articles/',
+		'create': _host + '/v1/articles',
+		'update': _host + '/v1/articles/',
+		'delete': _host + '/v1/articles/'
 	},
-	article_category: {
-		'index': _host + '/v1/article-category',
-		'view': _host + '/v1/article-category/',
-		'create': _host + '/v1/article-category',
-		'update': _host + '/v1/article-category/',
-		'delete': _host + '/v1/article-category/'
+	article_categories: {
+		'index': _host + '/v1/article-categories',
+		'view': _host + '/v1/article-categories/',
+		'create': _host + '/v1/article-categories',
+		'update': _host + '/v1/article-categories/',
+		'delete': _host + '/v1/article-categories/'
 	},
 	qiniu: {
 		'token': _host + '/v1/qiniu/token',
 	},
-	file: {
-		'view': _host + '/v1/file/',
-		'create': _host + '/v1/file',
+	files: {
+		'view': _host + '/v1/files/',
+		'create': _host + '/v1/files',
 	},
-	statistic: {
-		'index': _host + '/v1/statistic',
+	statistics: {
+		'index': _host + '/v1/statistics',
 	},
 	auth: {
 		'index': _host + '/v1/auth',
 	},
-	user: {
-		'fetch': _host + '/v1/user/fetch',
+	users: {
+		'fetch': _host + '/v1/users/fetch',
 	},
 };
 export const api = httpUrl

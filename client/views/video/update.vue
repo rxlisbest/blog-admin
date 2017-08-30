@@ -145,7 +145,7 @@ export default {
     addArticle (){
       let _this = this;
       this.axios({
-        url: api.article.create,
+        url: api.articles.create,
         method: "post",
         data : {
           title: this.article.title,
@@ -167,7 +167,7 @@ export default {
       let _this = this;
       let id = this.$route.params.id;
       this.axios({
-        url: api.article.update + id,
+        url: api.articles.update + id,
         method: "put",
         data : {
           title: this.article.title,
@@ -189,7 +189,7 @@ export default {
     loadArticleCategory(){
       let _this = this;
       this.axios({
-        url: api.article_category.index,
+        url: api.article_categories.index,
         method: "get",
       }).then((response) => {
         if(response.status == 200){
@@ -208,7 +208,7 @@ export default {
         return false;
       }
       this.axios({
-        url: api.article.view + id,
+        url: api.articles.view + id,
         method: "get",
       }).then((response) => {
         if(response.status == 200){
@@ -216,7 +216,7 @@ export default {
           _this.article = data;
           if(data.file_id > 0){
             _this.axios({
-              url: api.file.view + data.file_id,
+              url: api.files.view + data.file_id,
               method: "get",
             }).then((response) => {
               if(response.status == 200){
@@ -284,7 +284,7 @@ export default {
                 'FileUploaded': function(up, file, info) {
                   eval("info = " + info.response);
                   _this.axios({
-                    url: api.file.create,
+                    url: api.files.create,
                     method: "post",
                     data : {
                       hash: info.hash,
@@ -329,7 +329,7 @@ export default {
         return false;
       }
       _this.axios({
-        url: api.file.view + _this.file.id,
+        url: api.files.view + _this.file.id,
         method: "get",
       }).then((response) => {
         if(response.status == 200){

@@ -74,6 +74,7 @@
     "vue-lory": "0.0.4",
     "vue-nprogress": "0.1.5",
     "vue-peity": "0.5.0",
+    "vue-quill-editor": "^2.3.2",
     "vue-router": "^2.3.0",
     "vue-video-player": "^3.1.4",
     "vuex": "^2.2.1",

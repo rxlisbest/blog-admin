@@ -38,6 +38,30 @@ export default new Router({
       component: require('../views/video/update')
     },
     {
+      name: 'Article2',
+      path: '/article/page/:id',
+      meta: {
+        auth: true
+      },
+      component: require('../views/article')
+    },
+    {
+      name: 'updateArticle2',
+      path: '/article/update/:id',
+      meta: {
+        auth: true
+      },
+      component: require('../views/article/update')
+    },
+    {
+      name: 'createArticle2',
+      path: '/article/create',
+      meta: {
+        auth: true
+      },
+      component: require('../views/article/update')
+    },
+    {
       name: 'Login',
       path: '/login',
       component: require('../views/auth/Login')

@@ -3,7 +3,7 @@
     <div class="tile is-ancestor">
       <div class="tile is-parent is-12">
         <article class="tile is-child box">
-          <h1 class="title">视频</h1>
+          <h1 class="title">文字</h1>
           <div class="block">
             <label class="label">标题</label>
             <p class="control is-4">
@@ -19,20 +19,22 @@
               </span>
               <a class="category" @click="openCategoryModal()">分类管理</a>
             </p>
-            <p class="control is-4" id="container">
+            <!-- <p class="control is-4" id="container">
             <label class="label">上传</label>
               <a class="button is-warning" id="pickfiles">上传文件</a>
               <a class="button is-danger modal-button btn-left-10" @click="openVideoModal">预览</a>
               <progress-bar class="top" v-if="percent > 0 && percent < 100" :type="'warning'" :value="percent" :max="100"></progress-bar>
               <span class="btn-left-10" v-text="file.name"></span>
-            </p>
-            <label class="label">描述</label>
+            </p> -->
+            <label class="label">内容</label>
             <p class="control">
-              <textarea class="textarea" placeholder="Textarea" v-model="article.content"></textarea>
+              <quill-editor v-model="article.content" :options="{ theme: 'snow' }">
+              </quill-editor>
+              <!-- <textarea class="textarea" placeholder="Textarea" v-model="article.content"></textarea> -->
             </p>
             <p class="control">
               <button class="button is-primary" v-on:click="submit()">提交</button>
-              <router-link class="button is-link" :to="{ path: '/video' }">取消</router-link>
+              <router-link class="button is-link" :to="{ path: '/article' }">取消</router-link>
             </p>
           </div>
         </article>
@@ -54,6 +56,9 @@ import qiniu from 'qiniu-js'
 // message
 import Vue from 'vue'
 import VideoModal from '../components/modals/VideoModal'
+
+import { quillEditor } from 'vue-quill-editor'
+
 const VideoModalComponent = Vue.extend(VideoModal)
 import CategoryModal from '../article_category/UpdateModal'
 const CategoryModalComponent = Vue.extend(CategoryModal)
@@ -77,7 +82,8 @@ export default {
 
   components: {
     Chart,
-    ProgressBar
+    ProgressBar,
+    quillEditor
   },
   
   data () {
@@ -129,8 +135,8 @@ export default {
         openMessage({message: '分类不能为空', type: 'danger', duration: 1500, showCloseButton: true})
         return false;
       }
-      if(!file_id){
-        openMessage({message: '视频不能为空', type: 'danger', duration: 1500, showCloseButton: true})
+      if(!content){
+        openMessage({message: '内容不能为空', type: 'danger', duration: 1500, showCloseButton: true})
         return false;
       }
       let id = Number(this.$route.params.id);
@@ -156,7 +162,7 @@ export default {
       }).then((response) => {
         // console.log(response);
         if(response.status == 200){
-          _this.$router.push('/video');
+          _this.$router.push('/article');
         }
       }).catch((error) => {
 
@@ -172,13 +178,13 @@ export default {
         data : {
           title: this.article.title,
           content: this.article.content,
-          file_id: this.article.file_id,
+//          file_id: this.article.file_id,
           category_id: this.article.category_id,
-          cover_src: this.article.cover_src,
+//          cover_src: this.article.cover_src,
         }
       }).then((response) => {
         if(response.status == 200){
-          // _this.$router.push('/video');
+          // _this.$router.push('/article');
         }
         // console.log(response);
       }).catch((error) => {
@@ -192,7 +198,7 @@ export default {
         url: api.article_categories.index,
         method: "get",
         params: {
-          type: 1,
+          type: 2,
         }
       }).then((response) => {
         if(response.status == 200){
@@ -375,7 +381,7 @@ export default {
         title: '分类管理',
         okText: '新增',
         cancelText: '取消',
-        type: 1,
+        type: 2,
       };
       let ins = new CategoryModalComponent({
         el: document.createElement('div'),
@@ -386,7 +392,9 @@ export default {
   }
 }
 </script>
-
+<style lang="styl">
+  @import "~quill/assets/snow"
+</style>
 <style lang="scss" scoped>
   .input-30{
     width: 30%;

@@ -26,10 +26,20 @@ const state = {
       path: '/video',
       meta: {
         auth: true,
-        icon: 'fa fa-video-camera',
+        icon: 'fa fa-file-video-o',
         link: 'video/index.vue'
       },
       component: lazyLoading('video', true)
+    },
+    {
+      name: '文字管理',
+      path: '/article',
+      meta: {
+        auth: true,
+        icon: 'fa fa-file-word-o',
+        link: 'article/index.vue'
+      },
+      component: lazyLoading('article', true)
     },
     // charts,
     // uifeatures,

@@ -4,7 +4,7 @@
       <div class="tile is-parent">
         <article class="tile is-child box">
           <h4 class="title">列表</h4>
-          <router-link :to="{ path: '/video/create' }" class="button is-primary modal-button">新增记录</router-link>
+          <router-link :to="{ path: '/article/create' }" class="button is-primary modal-button">新增记录</router-link>
           
           <table class="table">
             <thead>
@@ -26,7 +26,7 @@
                 <td v-text="v.title"></td>
                 <td v-text="v.create_time"></td>
                 <td class="is-icon">
-                  <router-link :to="{ path: '/video/update/' + v.id }">编辑</router-link>
+                  <router-link :to="{ path: '/article/update/' + v.id }">编辑</router-link>
                   <a v-on:click="showModalMethod(delete_article_modal, deleteArticle, {id: v.id})">
                     删除
                   </a>
@@ -97,7 +97,7 @@ export default {
         params: {
           page: _this.articles.pages.page,
           user_id: _this.$auth.user().user_id,
-          type: 1,
+          type: 2,
         }
       }).then((response) => {
         let headers = response.headers;

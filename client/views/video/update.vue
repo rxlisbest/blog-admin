@@ -26,6 +26,10 @@
               <progress-bar class="top" v-if="percent > 0 && percent < 100" :type="'warning'" :value="percent" :max="100"></progress-bar>
               <span class="btn-left-10" v-text="file.name"></span>
             </p>
+            <label class="label">排序</label>
+            <p class="control is-4">
+              <input class="input input-50" type="text" placeholder="Text input" v-model="article.sort">
+            </p>
             <label class="label">描述</label>
             <p class="control">
               <textarea class="textarea" placeholder="Textarea" v-model="article.content"></textarea>
@@ -79,7 +83,7 @@ export default {
     Chart,
     ProgressBar
   },
-  
+
   data () {
     return {
       data: [300, 50, 100],
@@ -92,6 +96,7 @@ export default {
         category_id: '',
         file_id: 0,
         type: 1,
+        sort: 0,
       },
       file: {
         id: '',
@@ -152,6 +157,7 @@ export default {
           content: this.article.content,
           file_id: this.article.file_id,
           category_id: this.article.category_id,
+          sort: this.article.sort,
         }
       }).then((response) => {
         // console.log(response);
@@ -175,6 +181,7 @@ export default {
           file_id: this.article.file_id,
           category_id: this.article.category_id,
           cover_src: this.article.cover_src,
+          sort: this.article.sort,
         }
       }).then((response) => {
         if(response.status == 200){

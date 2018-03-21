@@ -60,8 +60,8 @@ export default {
       data: {
         body: {
           grant_type: 'password',
-          client_id: 'blog',
-          scop: 'test',
+          client_id: '5ab1eafb971da',
+          scope: 'all',
           username: null,
           password: null
         },

@@ -262,7 +262,7 @@ export default {
             get_new_uptoken: false,             // 设置上传文件的时候是否每次都重新获取新的uptoken
             domain: res.domain,     // bucket域名，下载资源时用到，必需
             container: 'container',             // 上传区域DOM ID，默认是browser_button的父元素
-            max_file_size: '100mb',             // 最大文件体积限制
+            max_file_size: '200mb',             // 最大文件体积限制
             flash_swf_url: 'path/of/plupload/Moxie.swf',  //引入flash，相对路径
             max_retries: 20,                     // 上传失败最大重试次数
             dragdrop: true,                     // 开启可拖曳上传

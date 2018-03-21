@@ -5,7 +5,7 @@
         <article class="tile is-child box">
           <h4 class="title">列表</h4>
           <router-link :to="{ path: '/video/create' }" class="button is-primary modal-button">新增记录</router-link>
-          
+
           <table class="table">
             <thead>
               <tr>
@@ -24,7 +24,7 @@
             <tbody>
               <tr v-for="v in articles.models">
                 <td v-text="v.title"></td>
-                <td v-text="v.create_time"></td>
+                <td v-text="(new Date(v.create_time * 1000)).toString()"></td>
                 <td class="is-icon">
                   <router-link :to="{ path: '/video/update/' + v.id }">编辑</router-link>
                   <a v-on:click="showModalMethod(delete_article_modal, deleteArticle, {id: v.id})">
@@ -78,10 +78,10 @@ export default {
     let id = Number(this.$route.params.id);
     if(!isNaN(id)){
       this.articles.pages.page = id;
-    } 
+    }
     this.loadData();
   },
-  
+
   methods: {
     requestData (page) {
       this.articles.pages.page = page;
